@@ -97,7 +97,7 @@ export const toggleTodoCompleted = ({callback=null, ...todo}, dispatch) => {
         body: JSON.stringify({
             query: updateTodoQuery,
             variables: {
-                todoUpdateInput: {id: todo.id, completed: todo.completed}
+                todoUpdateInput: {id: todo.id, completed: !todo.completed}
             }
         }),
     }).then((response) => {
