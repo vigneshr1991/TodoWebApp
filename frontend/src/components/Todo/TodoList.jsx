@@ -49,14 +49,14 @@ const TodoList = (props) => {
   }, [hasMore, pageNumber])
 
   const handleOnToggleTodo = (todo) => {
-    toggleTodoCompleted({...todo, callback: () => {
+    toggleTodoCompleted({...todo, callback: (statusSuccess) => {
       setShowAlert(true);
       setAlertMessage(`TODO: ${todo.text} marked ${!todo.completed ? 'completed' : 'incomplete'}`);
     }}, dispatch)
   }
 
   const handleOnDeleteTodo = (todo) => {
-    deleteTodo({...todo, callback: () => {
+    deleteTodo({...todo, callback: (statusSuccess) => {
       setShowAlert(true);
       setAlertMessage(`TODO: ${todo.text} deleted successfully`);
     }}, dispatch)

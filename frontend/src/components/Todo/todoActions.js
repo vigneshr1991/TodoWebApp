@@ -52,9 +52,10 @@ export const addTodo = ({text, dueDate, callback=null}, dispatch) => {
     .then((todo) => {
         const { data } = todo;
         dispatch({type: 'ADD_TODO', payload: data.createTodo});
-        callback && callback();
+        callback && callback(true);
     }).catch(e => {
         console.error("Something went wrong in addTodo :", e);
+        callback && callback(false);
     });
 }
 
@@ -79,9 +80,10 @@ export const getTodos = ({dueDate=null, pageNumber=1, isOverdue=false, callback=
     .then((todos) => {
         const { data } = todos;
         dispatch({type: 'GET_TODO', payload: data.todos});
-        callback && callback();
+        callback && callback(true);
     }).catch(e => {
         console.error("Something went wrong in getTodos :", e);
+        callback && callback(false);
     });
 }
 
@@ -103,9 +105,10 @@ export const toggleTodoCompleted = ({callback=null, ...todo}, dispatch) => {
             throw Error(response.statusText);
         }
         dispatch({ type: 'UPDATE_TODO', payload: todo.id });
-        callback && callback();
+        callback && callback(true);
     }).catch(e => {
         console.error("Something went wrong in toggleTodoCompleted :", e);
+        callback && callback(false);
     });
 }
 
@@ -125,9 +128,10 @@ export const deleteTodo = ({callback=null, ...todo}, dispatch) => {
             throw Error(response.statusText);
         }
         dispatch({ type: 'DELETE_TODO', payload: todo.id });
-        callback && callback();
+        callback && callback(true);
     }).catch(e => {
         console.error("Something went wrong in deleteTodo :", e);
+        callback && callback(false);
     });
 }
 
@@ -152,9 +156,10 @@ export const addTodo = ({text, dueDate, callback=null}, dispatch) => {
     })
     .then((todo) => {
         dispatch({type: 'ADD_TODO', payload: todo});
-        callback && callback();
+        callback && callback(true);
     }).catch(e => {
         console.error("Something went wrong in addTodo :", e);
+        callback && callback(false);
     });
 }
 
@@ -168,9 +173,10 @@ export const getTodos = ({dueDate=null, pageNumber=1, isOverdue=false, callback=
         return response.json()
     }).then((todos) => {
         dispatch({type: 'GET_TODO', payload: todos});
-        callback && callback();
+        callback && callback(true);
     }).catch(e => {
         console.error("Something went wrong in getTodos :", e);
+        callback && callback(false);
     }).finally(() => {
         dispatch({type: 'TODO_LOADING', payload: false});
     });
@@ -191,9 +197,10 @@ export const toggleTodoCompleted = ({callback=null, ...todo}, dispatch) => {
             throw Error(response.statusText);
         }
         dispatch({ type: 'UPDATE_TODO', payload: todo.id });
-        callback && callback();
+        callback && callback(true);
     }).catch(e => {
         console.error("Something went wrong in toggleTodoCompleted :", e);
+        callback && callback(false);
     });
 }
 
@@ -205,9 +212,10 @@ export const deleteTodo = ({callback=null, ...todo}, dispatch) => {
         throw Error(response.statusText);
     }
         dispatch({ type: 'DELETE_TODO', payload: todo.id });
-        callback && callback();
+        callback && callback(true);
     }).catch(e => {
         console.error("Something went wrong in deleteTodo :", e);
+        callback && callback(false);
     });
 }
 */

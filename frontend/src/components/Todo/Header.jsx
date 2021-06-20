@@ -3,6 +3,7 @@ import { Typography, Button, Icon, Paper, Box, TextField,
     Checkbox, FormGroup, FormControlLabel } from "@material-ui/core";
 import moment from 'moment';
 
+import Alert from '../Shared/Alerts';
 import { useAppState } from "../../AppState";
 import { addTodo, getTodos } from './todoActions'
 import todoStyles from './Styles';
@@ -17,6 +18,7 @@ const Header = () => {
     const [text, setText] = useState("");
     const [dueDate, setDueDate] = useState(today);
     const [fetchDueToday, setFetchDueToday] = useState(false);
+    const [ alertMessage, setAlertMessage] = useState(null);
     const [errorText, setErrorText] = useState("");
 
     const HandleOnDueTodayChage = (event) => {
@@ -31,9 +33,10 @@ const Header = () => {
     }
 
     const createTodo = () => {
-        addTodo({ text, dueDate, callback: () => {
+        addTodo({ text, dueDate, callback: (statusSuccess) => {
             setText("");
             setDueDate(today);
+            setAlertMessage(`Todo: ${text} added successfully`);
         }}, dispatch);
     }
 
@@ -48,6 +51,11 @@ const Header = () => {
 
     return (
         <>
+            <Alert
+                showAlert={alertMessage != null}
+                alertMessage={alertMessage}
+                handleOnALertClose={() => setAlertMessage(null)}
+            />
             <Typography variant="h3" component="h1" gutterBottom>
                 Todos
             </Typography>
