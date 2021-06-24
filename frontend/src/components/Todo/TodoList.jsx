@@ -21,8 +21,10 @@ const TodoList = (props) => {
   const { todoType } = props;
   const currentPageSize = DEFAULT_PAGE_SIZE * pageNumber;
 
+  const isOverdue = todoType === 'OVERDUE_TODOS';
+
   useEffect(() => {
-    getTodos({ isOverdue: todoType === 'OVERDUE_TODOS' }, dispatch);
+    getTodos({ isOverdue }, dispatch);
   }, []);
 
   function handleOnDragEnd(result) {
@@ -42,7 +44,7 @@ const TodoList = (props) => {
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && hasMore && (todos.length <= currentPageSize)) {
         dispatch({ type: 'INCREMENT_PAGE_NUMBER' });
-        getTodos({ dueDate: null, pageNumber: pageNumber + 1 }, dispatch);
+        getTodos({ dueDate: null, isOverdue, pageNumber: pageNumber + 1 }, dispatch);
       }
     })
     if (node) observer.current.observe(node);
